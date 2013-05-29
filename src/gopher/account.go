@@ -31,7 +31,7 @@ var defaultAvatars = []string{
 	"gopher_teal.jpg",
 }
 
-// 加密密码,转成md51111
+// 加密密码,转成md5
 func encryptPassword(password string) string {
 	h := md5.New()
 	io.WriteString(h, password)
