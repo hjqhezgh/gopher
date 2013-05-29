@@ -24,7 +24,7 @@ const ADMIN_NAV = template.HTML(`<div class="span3">
 </div>`)
 
 // URL: /admin
-// 后台管理首页，测试下分支
+// 后台管理首页，测试下分支,balabalabvaalasads
 func adminHandler(w http.ResponseWriter, r *http.Request) {
 	user, ok := currentUser(r)
 	if !ok {
