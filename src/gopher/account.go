@@ -31,7 +31,7 @@ var defaultAvatars = []string{
 	"gopher_teal.jpg",
 }
 
-// 加密密码,转成md5
+// 加密密码,转成md51111
 func encryptPassword(password string) string {
 	h := md5.New()
 	io.WriteString(h, password)
@@ -276,7 +276,7 @@ func followHandler(w http.ResponseWriter, r *http.Request) {
 	c.Update(bson.M{"_id": user.Id_}, bson.M{"$push": bson.M{"fans": currUser.Username}})
 	c.Update(bson.M{"_id": currUser.Id_}, bson.M{"$push": bson.M{"follow": user.Username}})
 
-	http.Redirect(w, r, "/member/"+user.Username, http.StatusFound)
+	http.Redirect(w, r, "/member/" + user.Username, http.StatusFound)
 }
 
 func unfollowHandler(w http.ResponseWriter, r *http.Request) {
@@ -314,7 +314,7 @@ func unfollowHandler(w http.ResponseWriter, r *http.Request) {
 	c.Update(bson.M{"_id": user.Id_}, bson.M{"$pull": bson.M{"fans": currUser.Username}})
 	c.Update(bson.M{"_id": currUser.Id_}, bson.M{"$pull": bson.M{"follow": user.Username}})
 
-	http.Redirect(w, r, "/member/"+user.Username, http.StatusFound)
+	http.Redirect(w, r, "/member/" + user.Username, http.StatusFound)
 }
 
 // URL /profile
@@ -341,23 +341,23 @@ func profileHandler(w http.ResponseWriter, r *http.Request) {
 		if profileForm.Validate(r) {
 			c := DB.C("users")
 			c.Update(bson.M{"_id": user.Id_}, bson.M{"$set": bson.M{
-				"website":        profileForm.Value("website"),
-				"location":       profileForm.Value("location"),
-				"tagline":        profileForm.Value("tagline"),
-				"bio":            profileForm.Value("bio"),
-				"githubusername": profileForm.Value("github_username"),
-				"weibo":          profileForm.Value("weibo"),
-			}})
+					"website":        profileForm.Value("website"),
+					"location":       profileForm.Value("location"),
+					"tagline":        profileForm.Value("tagline"),
+					"bio":            profileForm.Value("bio"),
+					"githubusername": profileForm.Value("github_username"),
+					"weibo":          profileForm.Value("weibo"),
+				}})
 			http.Redirect(w, r, "/profile", http.StatusFound)
 			return
 		}
 	}
 
 	renderTemplate(w, r, "account/profile.html", map[string]interface{}{
-		"user":           user,
-		"profileForm":    profileForm,
-		"defaultAvatars": defaultAvatars,
-	})
+			"user":           user,
+			"profileForm":    profileForm,
+			"defaultAvatars": defaultAvatars,
+		})
 }
 
 // URL: /forgot_password
@@ -459,9 +459,9 @@ func changeAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("changeAvatarHandler:", err.Error())
 			renderTemplate(w, r, "account/avatar.html", map[string]interface{}{
-				"user":  user,
-				"error": "请选择图片上传",
-			})
+					"user":  user,
+					"error": "请选择图片上传",
+				})
 			return
 		}
 
@@ -482,9 +482,9 @@ func changeAvatarHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("upload image type error:", uploadFileType)
 			// 提示错误
 			renderTemplate(w, r, "account/avatar.html", map[string]interface{}{
-				"user":  user,
-				"error": "文件类型错误，请选择jpg/png图片上传。",
-			})
+					"user":  user,
+					"error": "文件类型错误，请选择jpg/png图片上传。",
+				})
 			return
 		}
 
@@ -495,9 +495,9 @@ func changeAvatarHandler(w http.ResponseWriter, r *http.Request) {
 			// > 500K
 			fmt.Printf("upload image size > 500K: %dK\n", fileSize/1024)
 			renderTemplate(w, r, "account/avatar.html", map[string]interface{}{
-				"user":  user,
-				"error": "图片大小大于500K，请选择500K以内图片上传。",
-			})
+					"user":  user,
+					"error": "图片大小大于500K，请选择500K以内图片上传。",
+				})
 			return
 		}
 
@@ -532,9 +532,9 @@ func changeAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("upload to qiniu failed:", err.Error())
 			renderTemplate(w, r, "account/avatar.html", map[string]interface{}{
-				"user":  user,
-				"error": "上传失败，请反馈错误",
-			})
+					"user":  user,
+					"error": "上传失败，请反馈错误",
+				})
 			return
 		}
 
